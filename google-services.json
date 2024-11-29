@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "684413291574",
+    "project_id": "jerlib-reference",
+    "storage_bucket": "jerlib-reference.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684413291574:android:2303a70f8aa7c8e9b5dc97",
+        "android_client_info": {
+          "package_name": "com.example.jerlib"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB189wUjJYjJEexud33eUpu8yl7weaAJXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
