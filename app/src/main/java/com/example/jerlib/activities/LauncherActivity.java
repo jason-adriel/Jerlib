@@ -1,4 +1,4 @@
-package com.example.jerlib;
+package com.example.jerlib.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.jerlib.R;
 import com.example.jerlib.utils.Auth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -30,12 +31,14 @@ public class LauncherActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = Auth.instance.getCurrentUser();
-        if (currentUser == null) {
+        if (currentUser != null) {
             Intent invalidAuth = new Intent(this, AuthActivity.class);
             this.startActivity(invalidAuth);
             finish();
         } else {
-            //TODO Connect with Home
+            Intent startApp = new Intent(this, HomeActivity.class);
+            this.startActivity(startApp);
+            finish();
         }
     }
 }

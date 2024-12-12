@@ -1,4 +1,4 @@
-package com.example.jerlib;
+package com.example.jerlib.activities;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -6,10 +6,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -19,6 +17,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.jerlib.services.ApiService;
+import com.example.jerlib.R;
+import com.example.jerlib.models.Scopus;
+import com.example.jerlib.adapters.ScopusAdapter;
+import com.example.jerlib.utils.ScopusResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +35,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ScopusSearchActivity extends AppCompatActivity implements View.OnClickListener {
     RecyclerView searchScopusRV;
-    List<Scopus> listData = new ArrayList<Scopus>();
+    List<Scopus> listData = new ArrayList<>();
     EditText searchScopusET;
     ImageButton searchScopusBtn;
 

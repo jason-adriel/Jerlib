@@ -1,4 +1,4 @@
-package com.example.jerlib;
+package com.example.jerlib.models;
 
 import com.google.gson.annotations.SerializedName;
 

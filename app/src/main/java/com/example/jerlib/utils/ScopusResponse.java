@@ -1,5 +1,6 @@
-package com.example.jerlib;
+package com.example.jerlib.utils;
 
+import com.example.jerlib.models.Scopus;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

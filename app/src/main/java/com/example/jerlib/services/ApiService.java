@@ -1,6 +1,6 @@
-package com.example.jerlib;
+package com.example.jerlib.services;
 
-import java.util.List;
+import com.example.jerlib.utils.ScopusResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

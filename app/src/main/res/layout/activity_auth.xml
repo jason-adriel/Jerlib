@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:foregroundGravity="top"
-    tools:context=".AuthActivity">
+    tools:context=".activities.AuthActivity">
 
     <ImageView
         android:id="@+id/authLogoIV"
@@ -34,13 +34,5 @@
         app:layout_constraintTop_toBottomOf="@+id/authLogoIV">
 
     </FrameLayout>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="42dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="80dp"
-        tools:layout_editor_absoluteY="43dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
