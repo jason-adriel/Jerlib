@@ -1,4 +1,4 @@
-package com.example.jerlib;
+package com.example.jerlib.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.jerlib.R;
+import com.example.jerlib.utils.Auth;
+import com.google.firebase.auth.FirebaseUser;
+
+public class LauncherActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +25,20 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+    }
 
-        Intent intent = new Intent(MainActivity.this, ScopusSearchActivity.class);
-        startActivity(intent);
+    @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = Auth.instance.getCurrentUser();
+        if (currentUser != null) {
+            Intent invalidAuth = new Intent(this, AuthActivity.class);
+            this.startActivity(invalidAuth);
+            finish();
+        } else {
+            Intent startApp = new Intent(this, HomeActivity.class);
+            this.startActivity(startApp);
+            finish();
+        }
     }
 }
