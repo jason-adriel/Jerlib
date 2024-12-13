@@ -36,26 +36,16 @@
 
     <Button
         android:id="@+id/loginLoginBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/loginGoogleBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
     </com.google.android.gms.common.SignInButton>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-thin"
-        android:text="Don't have an account? Register instead."
-        android:textColor="#2196F3"
-        android:textSize="16sp"
-        android:textStyle="bold" />
 
 
 </LinearLayout>

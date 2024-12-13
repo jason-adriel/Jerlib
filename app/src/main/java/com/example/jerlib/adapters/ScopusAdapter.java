@@ -2,6 +2,8 @@ package com.example.jerlib.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,11 +43,21 @@ public class ScopusAdapter extends RecyclerView.Adapter<ScopusAdapter.ScopusView
         String paperAuthor = scopusList.get(position).getCreator();
         String paperYear = scopusList.get(position).getCoverDisplayDate();
         String paperJournal = scopusList.get(position).getPublicationName();
+        String paperDOI = scopusList.get(position).getDoi();
 
         holder.paperCategoryTV.setText(paperCategory);
         holder.paperTitleTV.setText(paperTitle);
         holder.paperAuthorTV.setText(paperAuthor);
         holder.paperYearTV.setText(paperYear + " - " + paperJournal);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://doi.org/" + paperDOI;
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                v.getContext().startActivity(browserIntent);
+            }
+        });
     }
 
     @Override
@@ -53,7 +65,7 @@ public class ScopusAdapter extends RecyclerView.Adapter<ScopusAdapter.ScopusView
         return scopusList.size();
     }
 
-    public class ScopusViewHolder extends RecyclerView.ViewHolder {
+    public static class ScopusViewHolder extends RecyclerView.ViewHolder {
         TextView paperCategoryTV, paperTitleTV, paperAuthorTV, paperYearTV;
 
         public ScopusViewHolder(@NonNull View itemView) {
