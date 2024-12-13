@@ -1,79 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scopusDetailsContainerLL"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="48dp"
-    tools:context=".activities.ScopusDetailsActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/scopusDetailsTypeTV"
+    <LinearLayout
+        android:id="@+id/scopusDetailsContainerLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Paper Type"
-        android:textColor="#3F51B5" />
+        android:orientation="vertical"
+        android:padding="32dp">
 
-    <TextView
-        android:id="@+id/scopusDetailsTitleTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="serif"
-        android:text="Paper Title"
-        android:textAlignment="textStart"
-        android:textSize="24sp"
-        android:textStyle="bold|italic" />
+        <TextView
+            android:id="@+id/scopusDetailsTypeTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Paper Type"
+            android:textColor="#3F51B5" />
 
-    <TextView
-        android:id="@+id/scopusDetailsAuthorTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:lineSpacingExtra="8sp"
-        android:text="Paper Authors"
-        android:textColor="#3F51B5"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/scopusDetailsTitleTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="Paper Title"
+            android:textAlignment="textStart"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
 
-    <TextView
-        android:id="@+id/scopusDetailsPublisherTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Publisher Title"
-        android:textStyle="italic" />
+        <TextView
+            android:id="@+id/scopusDetailsAuthorTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Authors"
+            android:textColor="#3F51B5"
+            android:textSize="14sp" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="8dp"
-        android:backgroundTintMode="add" />
+        <TextView
+            android:id="@+id/scopusDetailsPublisherTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Publisher Title"
+            android:textStyle="italic" />
 
-    <TextView
-        android:id="@+id/scopusDetailsKeywordsTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Keywords"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@+id/scopusDetailsKeywordsTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Keywords"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/scopusDetailsDescriptionTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:fontFamily="sans-serif"
-        android:text="Paper Description" />
+        <TextView
+            android:id="@+id/scopusDetailsDescriptionTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:justificationMode="inter_word"
+            android:text="Paper Description" />
 
-    <Button
-        android:id="@+id/scopusDetailsViewBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#64B5F6"
-        android:text="View Fulltext Article" />
+        <Button
+            android:id="@+id/scopusDetailsViewBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#64B5F6"
+            android:text="View Fulltext Article" />
 
-    <Button
-        android:id="@+id/scopusDetailsAddBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#64B5F6"
-        android:text="Add to Shelf" />
+        <Button
+            android:id="@+id/scopusDetailsAddBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#64B5F6"
+            android:text="Add to Shelf" />
 
-</LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

@@ -19,12 +19,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jerlib.fragments.SearchConfigBottomSheet;
+import com.example.jerlib.models.Entry;
+import com.example.jerlib.models.ResultResponse;
 import com.example.jerlib.services.ApiService;
 import com.example.jerlib.R;
-import com.example.jerlib.models.Scopus;
 import com.example.jerlib.adapters.ScopusAdapter;
-import com.example.jerlib.utils.ScopusResponse;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +39,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ScopusSearchActivity extends AppCompatActivity implements View.OnClickListener {
     RecyclerView searchScopusRV;
-    List<Scopus> listData = new ArrayList<>();
+    List<Entry> listData = new ArrayList<>();
     EditText searchScopusET;
     ImageButton searchScopusBtn, searchScopusConfigBtn;
 
     Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("https://api.elsevier.com/")
+            .baseUrl("https://doaj.org/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
@@ -85,7 +88,7 @@ public class ScopusSearchActivity extends AppCompatActivity implements View.OnCl
         searchScopusRV.setLayoutManager(new LinearLayoutManager(this));
 
         // Perform the initial request with the default query
-        fetchScopusData("AF-ID(60103610)");
+        fetchScopusData("title:technology");
     }
 
     @Override
@@ -96,34 +99,38 @@ public class ScopusSearchActivity extends AppCompatActivity implements View.OnCl
 
             // Use the query from EditText or default to AF-ID(60103610) if empty
             if (!query.isEmpty()) {
-                fetchScopusData("title(" + query + ")");
+                fetchScopusData(query);
             } else {
-                fetchScopusData("AF-ID(60103610)");
+                fetchScopusData("technology");
             }
+        }
+    }
+
+    private static String encodeValue(String value) {
+        try {
+            return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException(ex.getCause());
         }
     }
 
     private void fetchScopusData(String query) {
         Log.i("ApiService", "Sending API request...");
-        Log.i("ApiService", "Request URL: " + "https://api.elsevier.com/scopusSearch?query=" +
-                query + "&apiKey=" + "3ba7a65a9386d24a55d4182434f8b417");
 
         // Perform the request
-        Call<ScopusResponse> call = apiService.getScopuses(query, "3ba7a65a9386d24a55d4182434f8b417");
+        Call<ResultResponse> call = apiService.getResponse(query, "created_date:desc", 1);
 
         call.enqueue(new Callback<>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onResponse(Call<ScopusResponse> call, Response<ScopusResponse> response) {
+            public void onResponse(Call<ResultResponse> call, Response<ResultResponse> response) {
                 Log.i("ApiService", "Response received: " + response.toString());
                 if (response.isSuccessful()) {
-                    ScopusResponse scopusResponse = response.body();
+                    ResultResponse resultResponse = response.body();
+                    listData = resultResponse.getEntries();
 
-                    listData = scopusResponse.getSearchResults().getEntry();
-
-                    if (listData.get(0).getTitle() == null) {
+                    if (listData.get(0).getId() == null) {
                         Toast.makeText(ScopusSearchActivity.this, "No Results Found", Toast.LENGTH_LONG).show();
-                        Log.i("ApiService", "Toast called.");
                     }
 
                     // Update the RecyclerView adapter with the new data
@@ -140,7 +147,7 @@ public class ScopusSearchActivity extends AppCompatActivity implements View.OnCl
             }
 
             @Override
-            public void onFailure(Call<ScopusResponse> call, Throwable t) {
+            public void onFailure(Call<ResultResponse> call, Throwable t) {
                 // Log the failure message
                 Log.e("ApiService", "Request failed: " + t.getMessage(), t);
 
