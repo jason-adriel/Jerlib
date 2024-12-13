@@ -18,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.jerlib.fragments.SearchConfigBottomSheet;
 import com.example.jerlib.services.ApiService;
 import com.example.jerlib.R;
 import com.example.jerlib.models.Scopus;
@@ -37,7 +38,7 @@ public class ScopusSearchActivity extends AppCompatActivity implements View.OnCl
     RecyclerView searchScopusRV;
     List<Scopus> listData = new ArrayList<>();
     EditText searchScopusET;
-    ImageButton searchScopusBtn;
+    ImageButton searchScopusBtn, searchScopusConfigBtn;
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://api.elsevier.com/")
@@ -51,7 +52,7 @@ public class ScopusSearchActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_scopus_search);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.scopusDetailsAuthorTV), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -60,7 +61,12 @@ public class ScopusSearchActivity extends AppCompatActivity implements View.OnCl
         // Initialize views
         searchScopusET = findViewById(R.id.searchScopusET);
         searchScopusBtn = findViewById(R.id.searchScopusBtn);
+        searchScopusConfigBtn = findViewById(R.id.searchScopusConfigBtn);
         searchScopusBtn.setOnClickListener(this);
+        searchScopusConfigBtn.setOnClickListener(v -> {
+            SearchConfigBottomSheet dialog = new SearchConfigBottomSheet();
+            dialog.show(getSupportFragmentManager(), "SearchConfig Bottom Dialog");
+        });
 
         searchScopusET.setOnKeyListener((view, keyCode, event) -> {
             if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -99,23 +105,25 @@ public class ScopusSearchActivity extends AppCompatActivity implements View.OnCl
 
     private void fetchScopusData(String query) {
         Log.i("ApiService", "Sending API request...");
-        Log.i("ApiService", "Request URL: " + "https://api.elsevier.com/scopusSearch?query=" + query + "&apiKey=" + "3ba7a65a9386d24a55d4182434f8b417");
+        Log.i("ApiService", "Request URL: " + "https://api.elsevier.com/scopusSearch?query=" +
+                query + "&apiKey=" + "3ba7a65a9386d24a55d4182434f8b417");
 
         // Perform the request
         Call<ScopusResponse> call = apiService.getScopuses(query, "3ba7a65a9386d24a55d4182434f8b417");
 
-        call.enqueue(new Callback<ScopusResponse>() {
+        call.enqueue(new Callback<>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(Call<ScopusResponse> call, Response<ScopusResponse> response) {
                 Log.i("ApiService", "Response received: " + response.toString());
                 if (response.isSuccessful()) {
                     ScopusResponse scopusResponse = response.body();
+
                     listData = scopusResponse.getSearchResults().getEntry();
 
-                    if(listData.get(0).getTitle() == null){
+                    if (listData.get(0).getTitle() == null) {
                         Toast.makeText(ScopusSearchActivity.this, "No Results Found", Toast.LENGTH_LONG).show();
-                        Log.i("ApiService", "Harusnya Toast");
+                        Log.i("ApiService", "Toast called.");
                     }
 
                     // Update the RecyclerView adapter with the new data

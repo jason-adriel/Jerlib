@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jerlib.R;
+import com.example.jerlib.activities.ScopusDetailsActivity;
 import com.example.jerlib.models.Scopus;
 
 import java.util.List;
@@ -44,6 +45,8 @@ public class ScopusAdapter extends RecyclerView.Adapter<ScopusAdapter.ScopusView
         String paperYear = scopusList.get(position).getCoverDisplayDate();
         String paperJournal = scopusList.get(position).getPublicationName();
         String paperDOI = scopusList.get(position).getDoi();
+        String paperDescription = scopusList.get(position).getDescription();
+        String paperKeywords = scopusList.get(position).getKeywords();
 
         holder.paperCategoryTV.setText(paperCategory);
         holder.paperTitleTV.setText(paperTitle);
@@ -53,9 +56,16 @@ public class ScopusAdapter extends RecyclerView.Adapter<ScopusAdapter.ScopusView
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String url = "https://doi.org/" + paperDOI;
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                v.getContext().startActivity(browserIntent);
+                Intent seeDetails = new Intent(v.getContext(), ScopusDetailsActivity.class);
+                seeDetails.putExtra("type", paperCategory + "-" + paperYear);
+                seeDetails.putExtra("title", paperTitle);
+                seeDetails.putExtra("doi", paperDOI);
+                seeDetails.putExtra("keywords", paperKeywords);
+                seeDetails.putExtra("description", paperDescription);
+                seeDetails.putExtra("publisher", paperJournal);
+                seeDetails.putExtra("author", paperAuthor);
+
+                v.getContext().startActivity(seeDetails);
             }
         });
     }

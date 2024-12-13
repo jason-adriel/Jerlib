@@ -17,8 +17,12 @@ public class Scopus {
     private String coverDisplayDate;
     @SerializedName("subtypeDescription")
     private String type;
+    @SerializedName("dc:description")
+    private String description;
+    @SerializedName("authkeywords")
+    private String keywords;
 
-    public Scopus(String id, String title, String doi, String creator, String publicationName, String coverDisplayDate, String type) {
+    public Scopus(String id, String title, String doi, String creator, String publicationName, String coverDisplayDate, String type, String description, String keywords) {
         this.id = id;
         this.title = title;
         this.doi = doi;
@@ -26,6 +30,8 @@ public class Scopus {
         this.publicationName = publicationName;
         this.coverDisplayDate = coverDisplayDate;
         this.type = type;
+        this.description = description;
+        this.keywords = keywords;
     }
 
     public String getId() {
@@ -82,5 +88,21 @@ public class Scopus {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords;
     }
 }
