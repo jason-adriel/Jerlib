@@ -10,7 +10,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.jerlib.R;
-import com.example.jerlib.utils.Auth;
+import com.example.jerlib.utils.FirebaseUtil;
 import com.google.firebase.auth.FirebaseUser;
 
 public class LauncherActivity extends AppCompatActivity {
@@ -30,7 +30,7 @@ public class LauncherActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = Auth.instance.getCurrentUser();
+        FirebaseUser currentUser = FirebaseUtil.auth.getCurrentUser();
         if (currentUser != null) {
             Intent invalidAuth = new Intent(this, AuthActivity.class);
             this.startActivity(invalidAuth);

@@ -11,4 +11,6 @@
     <string name="login_failed">"Login failed"</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="auth_register_prompt">Don\'t have an account? Register instead.</string>
+    <string name="auth_login_prompt">Already have an account? Login instead.</string>
 </resources>
