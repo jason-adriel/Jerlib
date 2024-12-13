@@ -3,26 +3,33 @@ package com.example.jerlib.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.text.HtmlCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.jerlib.R;
-import com.example.jerlib.models.Scopus;
+import com.example.jerlib.activities.ScopusDetailsActivity;
+import com.example.jerlib.models.Bibjson;
+import com.example.jerlib.models.Entry;
 
 import java.util.List;
+import java.util.Locale;
 
 public class ScopusAdapter extends RecyclerView.Adapter<ScopusAdapter.ScopusViewHolder>{
     Context context;
-    List<Scopus> scopusList;
+    List<Entry> scopusList;
 
-    public ScopusAdapter(List<Scopus> scopusList){
+    public ScopusAdapter(List<Entry> scopusList){
         this.scopusList = scopusList;
+    }
+
+    private String getCleanText(String s) {
+        return HtmlCompat.fromHtml(s, HtmlCompat.FROM_HTML_MODE_LEGACY).toString().trim();
     }
 
     @NonNull
@@ -38,25 +45,32 @@ public class ScopusAdapter extends RecyclerView.Adapter<ScopusAdapter.ScopusView
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ScopusAdapter.ScopusViewHolder holder, int position) {
-        String paperCategory = scopusList.get(position).getType();
-        String paperTitle = scopusList.get(position).getTitle();
-        String paperAuthor = scopusList.get(position).getCreator();
-        String paperYear = scopusList.get(position).getCoverDisplayDate();
-        String paperJournal = scopusList.get(position).getPublicationName();
-        String paperDOI = scopusList.get(position).getDoi();
+        Bibjson metadata = scopusList.get(position).getBibjson();
+        String paperCategory = metadata.getSubject().get(0).getTerm();
+        String paperTitle = getCleanText(metadata.getTitle());
+        String paperAuthor = getCleanText(metadata.getAuthor().get(0).getName());
+        String paperYear = metadata.getYear();
+        String paperJournal = metadata.getJournal().getTitle();
+        String paperDOI = metadata.getIdentifier().get(0).getId();
+        String paperDescription = getCleanText(metadata.getAbstract());
+        String paperKeywords = getCleanText(metadata.getKeywords().get(0).toUpperCase(Locale.ROOT));
 
         holder.paperCategoryTV.setText(paperCategory);
         holder.paperTitleTV.setText(paperTitle);
         holder.paperAuthorTV.setText(paperAuthor);
         holder.paperYearTV.setText(paperYear + " - " + paperJournal);
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url = "https://doi.org/" + paperDOI;
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                v.getContext().startActivity(browserIntent);
-            }
+        holder.itemView.setOnClickListener(v -> {
+            Intent seeDetails = new Intent(v.getContext(), ScopusDetailsActivity.class);
+            seeDetails.putExtra("type", paperCategory + " - " + paperYear);
+            seeDetails.putExtra("title", paperTitle);
+            seeDetails.putExtra("doi", paperDOI);
+            seeDetails.putExtra("keywords", paperKeywords);
+            seeDetails.putExtra("description", paperDescription);
+            seeDetails.putExtra("publisher", paperJournal);
+            seeDetails.putExtra("author", paperAuthor);
+
+            v.getContext().startActivity(seeDetails);
         });
     }
 
