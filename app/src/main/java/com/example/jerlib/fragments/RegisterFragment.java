@@ -1,14 +1,38 @@
 package com.example.jerlib.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jerlib.R;
+import com.example.jerlib.activities.HomeActivity;
+import com.example.jerlib.utils.FirebaseUtil;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Firebase;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RegisterFragment extends Fragment {
 
@@ -20,6 +44,90 @@ public class RegisterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_register, container, false);
+        View view =  inflater.inflate(R.layout.fragment_register, container, false);
+        EditText nameET = view.findViewById(R.id.registerNameET);
+        EditText emailET = view.findViewById(R.id.registerEmailET);
+        EditText passwordET = view.findViewById(R.id.registerPasswordET);
+        TextView error = view.findViewById(R.id.registerErrorTV);
+        Button registerBtn = view.findViewById(R.id.registerRegisterBtn);
+
+        registerBtn.setOnClickListener(v -> {
+            String name = nameET.getText().toString();
+            String email = emailET.getText().toString();
+            String password = passwordET.getText().toString();
+
+            if (email.isEmpty() || password.isEmpty() || name.isEmpty()) {
+                error.setText("Password, email, and name cannot be empty!");
+            }
+            else {
+                FirebaseUtil.auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(view.getContext().getMainExecutor(), new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d("FIREBASE", "createUserWithEmail:success");
+                                    FirebaseUser user = FirebaseUtil.auth.getCurrentUser();
+                                    String uuid = user.getUid();
+                                    Map<String, Object> shelfData = new HashMap<>();
+                                    shelfData.put("name", "Default Shelf");
+                                    shelfData.put("created_at", new Timestamp(new Date()));
+                                    shelfData.put("updated_at", new Timestamp(new Date()));
+                                    shelfData.put("entries", List.of());
+
+                                    FirebaseUtil.db().collection("Shelves")
+                                            .add(shelfData)
+                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                @Override
+                                                public void onSuccess(DocumentReference documentReference) {
+                                                    Log.d("FIRESTORE", "Document update success.");
+                                                    String key = documentReference.getId();
+                                                    Map<String, Object> userData = new HashMap<>();
+                                                    userData.put("name", name);
+                                                    userData.put("email", email);
+                                                    userData.put("uuid", uuid);
+                                                    userData.put("shelves", List.of(key));
+
+                                                    FirebaseUtil.db().collection("Users")
+                                                            .add(userData)
+                                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                                @Override
+                                                                public void onSuccess(DocumentReference documentReference) {
+                                                                    Log.d("FIRESTORE", "Userdata written.");
+                                                                }
+                                                            })
+                                                            .addOnFailureListener(new OnFailureListener() {
+                                                                @Override
+                                                                public void onFailure(@NonNull Exception e) {
+                                                                    Log.d("FIRESTORE", "Userdata write failed!");
+                                                                }
+                                                            });
+
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.d("FIRESTORE", "Document update failed.");
+                                                }
+                                            });
+
+                                    Intent startApp = new Intent(view.getContext(), HomeActivity.class);
+                                    view.getContext().startActivity(startApp);
+                                    requireActivity().finish();
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w("FIREBASE UTIL", "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(view.getContext(), "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                    error.setText("Email has already been taken.");
+                                }
+                            }
+                        });
+            }
+
+        });
+
+        return view;
     }
 }

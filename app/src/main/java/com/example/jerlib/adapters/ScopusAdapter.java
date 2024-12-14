@@ -85,7 +85,6 @@ public class ScopusAdapter extends RecyclerView.Adapter<ScopusAdapter.ScopusView
 
         public ScopusViewHolder(@NonNull View itemView) {
             super(itemView);
-
             paperCategoryTV = itemView.findViewById(R.id.paperCategoryTV);
             paperTitleTV = itemView.findViewById(R.id.paperTitleTV);
             paperAuthorTV = itemView.findViewById(R.id.paperAuthorTV);

@@ -63,5 +63,4 @@ public class AuthActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-
 }
