@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "684413291574",
+    "project_id": "jerlib-reference",
+    "storage_bucket": "jerlib-reference.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:684413291574:android:2303a70f8aa7c8e9b5dc97",
+        "android_client_info": {
+          "package_name": "com.example.jerlib"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "684413291574-ohue10k8eiuuias8eqtu53215srjvn9f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jerlib",
+            "certificate_hash": "5320cae2e7f49d276c562d1827a51e6dcd90d6fa"
+          }
+        },
+        {
+          "client_id": "684413291574-tpll02lj9kc4sckq46lpc9rqv3s3uh73.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB189wUjJYjJEexud33eUpu8yl7weaAJXM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "684413291574-tpll02lj9kc4sckq46lpc9rqv3s3uh73.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
