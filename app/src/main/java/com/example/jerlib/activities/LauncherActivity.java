@@ -31,7 +31,7 @@ public class LauncherActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = FirebaseUtil.auth.getCurrentUser();
-        if (currentUser != null) {
+        if (currentUser == null) {
             Intent invalidAuth = new Intent(this, AuthActivity.class);
             this.startActivity(invalidAuth);
             finish();
