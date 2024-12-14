@@ -47,5 +47,12 @@
 
     </com.google.android.gms.common.SignInButton>
 
+    <TextView
+        android:id="@+id/loginErrorTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#F06292"
+        android:textStyle="bold" />
+
 
 </LinearLayout>

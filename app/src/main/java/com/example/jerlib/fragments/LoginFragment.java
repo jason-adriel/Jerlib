@@ -11,6 +11,9 @@ import com.example.jerlib.R;
 
 public class LoginFragment extends Fragment {
 
+    public LoginFragment() {
+
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
