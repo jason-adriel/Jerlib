@@ -7,7 +7,6 @@ import com.google.gson.annotations.SerializedName;
 import javax.annotation.Nullable;
 
 public class Bibjson {
-
     @SerializedName("identifier")
     @Expose
     private List<Identifier> identifier;

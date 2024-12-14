@@ -31,11 +31,14 @@ public class LauncherActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = FirebaseUtil.auth.getCurrentUser();
-        if (currentUser != null) {
+        if (currentUser == null) {
             Intent invalidAuth = new Intent(this, AuthActivity.class);
             this.startActivity(invalidAuth);
             finish();
         } else {
+            FirebaseUtil.auth.signOut();
+            finish();
+            startActivity(getIntent());
             Intent startApp = new Intent(this, HomeActivity.class);
             this.startActivity(startApp);
             finish();
