@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.jerlib.R;
+import com.example.jerlib.fragments.HomeFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -26,6 +27,8 @@ public class HomeActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        loadFragment(new HomeFragment());
     }
 
     private void loadFragment(Fragment fg){

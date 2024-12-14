@@ -29,7 +29,7 @@ public class ScopusAdapter extends RecyclerView.Adapter<ScopusAdapter.ScopusView
         this.scopusList = scopusList;
     }
 
-    private String getCleanText(String s) {
+    public static String getCleanText(String s) {
         return HtmlCompat.fromHtml(s, HtmlCompat.FROM_HTML_MODE_LEGACY).toString().trim();
     }
 
