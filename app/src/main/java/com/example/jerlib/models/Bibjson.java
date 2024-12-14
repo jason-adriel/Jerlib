@@ -4,6 +4,8 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import javax.annotation.Nullable;
+
 public class Bibjson {
 
     @SerializedName("identifier")
@@ -14,6 +16,7 @@ public class Bibjson {
     private Journal journal;
     @SerializedName("end_page")
     @Expose
+    @Nullable
     private String endPage;
     @SerializedName("keywords")
     @Expose
@@ -35,6 +38,7 @@ public class Bibjson {
     private List<Link> link;
     @SerializedName("abstract")
     @Expose
+    @Nullable
     private String _abstract;
     @SerializedName("title")
     @Expose
