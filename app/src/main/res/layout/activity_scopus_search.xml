@@ -42,7 +42,7 @@
             android:layout_width="48dp"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            app:srcCompat="@drawable/icon_settings" />
+            app:srcCompat="@drawable/icon_filter" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
