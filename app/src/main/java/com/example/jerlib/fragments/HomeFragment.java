@@ -42,11 +42,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends Fragment {
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://doaj.org/")
@@ -111,6 +106,44 @@ public class HomeFragment extends Fragment {
 
     List<Entry> listData = new ArrayList<>();
 
+    private void inflateCards(CardView view, int i) {
+        View scopusView = LayoutInflater.from(requireContext()).inflate(R.layout.scopus_list, view, false);
+        Bibjson metadata = listData.get(i).getBibjson();
+        String paperCategory = metadata.getSubject().get(0).getTerm();
+        String paperTitle = getCleanText(metadata.getTitle());
+        String paperAuthor = getCleanText(metadata.getAuthor().get(0).getName());
+        String paperYear = metadata.getYear();
+        String paperJournal = metadata.getJournal().getTitle();
+        String paperDOI = metadata.getLink().get(0).getUrl();
+        String paperDescription = getCleanText(metadata.getAbstract() == null ? "-" : metadata.getAbstract());
+        String paperKeywords = metadata.getKeywords() == null ? "None specified" : metadata.getKeywords().get(0).toUpperCase(Locale.ROOT);
+
+        TextView paperCategoryTV = scopusView.findViewById(R.id.paperCategoryTV);
+        TextView paperTitleTV = scopusView.findViewById(R.id.paperTitleTV);
+        TextView paperAuthorTV = scopusView.findViewById(R.id.paperAuthorTV);
+        TextView paperYearTV = scopusView.findViewById(R.id.paperYearTV);
+
+        paperCategoryTV.setText(paperCategory);
+        paperTitleTV.setText(paperTitle);
+        paperAuthorTV.setText(paperAuthor);
+        paperYearTV.setText(paperYear + " - " + paperJournal);
+
+        scopusView.setOnClickListener(v -> {
+            Intent seeDetails = new Intent(v.getContext(), ScopusDetailsActivity.class);
+            seeDetails.putExtra("type", paperCategory + " - " + paperYear);
+            seeDetails.putExtra("title", paperTitle);
+            seeDetails.putExtra("doi", paperDOI);
+            seeDetails.putExtra("keywords", paperKeywords);
+            seeDetails.putExtra("description", paperDescription);
+            seeDetails.putExtra("publisher", paperJournal);
+            seeDetails.putExtra("author", paperAuthor);
+
+            v.getContext().startActivity(seeDetails);
+        });
+
+        view.addView(scopusView);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,11 +163,12 @@ public class HomeFragment extends Fragment {
         String query = "bibjson.keywords:" + keywords.get(rand.nextInt(keywords.size()));
 
         CardView homeScopusCard = view.findViewById(R.id.homeScopusCard);
+        CardView homeScopusCard2 = view.findViewById(R.id.homeScopusCard2);
 
-        fetchScopusData(query, homeScopusCard);
+        fetchScopusData(query, homeScopusCard, homeScopusCard2);
     }
 
-    private void fetchScopusData(String query, CardView homeScopusCard) {
+    private void fetchScopusData(String query, CardView v1, CardView v2) {
         Log.i("ApiService", "Sending API request...");
 
         // Perform the request
@@ -154,42 +188,8 @@ public class HomeFragment extends Fragment {
                     }
                     else{
                         // Inflate scopus_list.xml
-                        View scopusView = LayoutInflater.from(requireContext()).inflate(R.layout.scopus_list, homeScopusCard, false);
-
-                        Bibjson metadata = listData.get(0).getBibjson();
-                        String paperCategory = metadata.getSubject().get(0).getTerm();
-                        String paperTitle = getCleanText(metadata.getTitle());
-                        String paperAuthor = getCleanText(metadata.getAuthor().get(0).getName());
-                        String paperYear = metadata.getYear();
-                        String paperJournal = metadata.getJournal().getTitle();
-                        String paperDOI = metadata.getIdentifier().get(0).getId();
-                        String paperDescription = getCleanText(metadata.getAbstract() == null ? "-" : metadata.getAbstract());
-                        String paperKeywords = metadata.getKeywords() == null ? "None specified" : metadata.getKeywords().get(0).toUpperCase(Locale.ROOT);
-
-                        TextView paperCategoryTV = scopusView.findViewById(R.id.paperCategoryTV);
-                        TextView paperTitleTV = scopusView.findViewById(R.id.paperTitleTV);
-                        TextView paperAuthorTV = scopusView.findViewById(R.id.paperAuthorTV);
-                        TextView paperYearTV = scopusView.findViewById(R.id.paperYearTV);
-
-                        paperCategoryTV.setText(paperCategory);
-                        paperTitleTV.setText(paperTitle);
-                        paperAuthorTV.setText(paperAuthor);
-                        paperYearTV.setText(paperYear + " - " + paperJournal);
-
-                        scopusView.setOnClickListener(v -> {
-                            Intent seeDetails = new Intent(v.getContext(), ScopusDetailsActivity.class);
-                            seeDetails.putExtra("type", paperCategory + " - " + paperYear);
-                            seeDetails.putExtra("title", paperTitle);
-                            seeDetails.putExtra("doi", paperDOI);
-                            seeDetails.putExtra("keywords", paperKeywords);
-                            seeDetails.putExtra("description", paperDescription);
-                            seeDetails.putExtra("publisher", paperJournal);
-                            seeDetails.putExtra("author", paperAuthor);
-
-                            v.getContext().startActivity(seeDetails);
-                        });
-
-                        homeScopusCard.addView(scopusView);
+                        inflateCards(v1, 0);
+                        inflateCards(v2, 1);
                     }
 
                     Log.i("ApiService", "Scopus Data: " + listData);

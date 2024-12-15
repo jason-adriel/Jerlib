@@ -19,6 +19,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/homeTitleTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="serif"
+            android:text="Article of the Day"
+            android:textAlignment="viewStart"
+            android:textSize="24sp"
+            android:textStyle="bold|italic" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
         <androidx.cardview.widget.CardView
             android:id="@+id/homeScopusCard"
             android:layout_width="match_parent"
@@ -31,7 +45,33 @@
             app:contentPaddingBottom="16dp"
             app:contentPaddingLeft="24dp"
             app:contentPaddingRight="24dp"
+            app:contentPaddingTop="16dp" >
+
+        </androidx.cardview.widget.CardView>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="12dp" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/homeScopusCard2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="0dp"
+            android:paddingVertical="0dp"
+            app:cardBackgroundColor="#00FFFFFF"
+            app:cardCornerRadius="5pt"
+            app:cardElevation="1dp"
+            app:contentPaddingBottom="16dp"
+            app:contentPaddingLeft="24dp"
+            app:contentPaddingRight="24dp"
             app:contentPaddingTop="16dp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

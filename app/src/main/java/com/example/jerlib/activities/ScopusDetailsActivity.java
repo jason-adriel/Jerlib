@@ -60,8 +60,7 @@ public class ScopusDetailsActivity extends AppCompatActivity {
         scopusDetailsAddBtn = findViewById(R.id.scopusDetailsAddBtn);
 
         scopusDetailsViewBtn.setOnClickListener(v -> {
-            String url = "https://doi.org/" + paperDOI;
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(paperDOI));
             v.getContext().startActivity(browserIntent);
         });
 

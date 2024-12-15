@@ -52,7 +52,7 @@ public class ScopusAdapter extends RecyclerView.Adapter<ScopusAdapter.ScopusView
         String paperAuthor = getCleanText(metadata.getAuthor().get(0).getName());
         String paperYear = metadata.getYear();
         String paperJournal = metadata.getJournal().getTitle();
-        String paperDOI = metadata.getIdentifier().get(0).getId();
+        String paperDOI = metadata.getLink().get(0).getUrl();
         String paperDescription = getCleanText(metadata.getAbstract() == null ? "-" : metadata.getAbstract());
         String paperKeywords = metadata.getKeywords() == null ? "None specified" : metadata.getKeywords().get(0).toUpperCase(Locale.ROOT);
 
