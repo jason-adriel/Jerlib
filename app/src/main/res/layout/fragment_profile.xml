@@ -183,6 +183,13 @@
             android:backgroundTint="#4FC3F7"
             android:text="Edit Profile" />
 
+        <Button
+            android:id="@+id/profileLogoutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#F06292"
+            android:text="Logout" />
+
     </LinearLayout>
 
 </ScrollView>

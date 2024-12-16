@@ -68,14 +68,13 @@ public class RegisterFragment extends Fragment {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.d("FIREBASE", "createUserWithEmail:success");
                                     FirebaseUser user = FirebaseUtil.auth.getCurrentUser();
+                                    assert user != null;
                                     String uuid = user.getUid();
 
                                     Map<String, Object> userData = new HashMap<>();
                                     userData.put("name", name);
                                     userData.put("email", email);
                                     userData.put("uuid", uuid);
-                                    userData.put("created_at", new Timestamp(new Date()));
-                                    userData.put("updated_at", new Timestamp(new Date()));
 
                                     Map<String, Object> shelfData = new HashMap<>();
                                     shelfData.put("name", "Default Shelf");

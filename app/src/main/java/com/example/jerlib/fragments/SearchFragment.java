@@ -21,11 +21,13 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.jerlib.R;
-import com.example.jerlib.activities.ScopusSearchActivity;
 import com.example.jerlib.adapters.ScopusAdapter;
 import com.example.jerlib.models.Entry;
 import com.example.jerlib.models.ResultResponse;
 import com.example.jerlib.services.ApiService;
+import com.example.jerlib.utils.CustomAPIDeserializer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +45,14 @@ public class SearchFragment extends Fragment {
     EditText searchScopusET;
     ImageButton searchScopusBtn, searchScopusConfigBtn;
 
+    Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Entry.class, new CustomAPIDeserializer())
+            .excludeFieldsWithoutExposeAnnotation()
+            .create();
+
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://doaj.org/")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 
     ApiService apiService = retrofit.create(ApiService.class);
@@ -114,13 +121,14 @@ public class SearchFragment extends Fragment {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<ResultResponse> call, @NonNull Response<ResultResponse> response) {
-                Log.i("ApiService", "Response received: " + response.toString());
+                Log.i("ApiService", "Response received: " + response);
                 if (response.isSuccessful()) {
                     ResultResponse resultResponse = response.body();
                     assert resultResponse != null;
                     listData = resultResponse.getEntries();
+                    listData.removeIf(Objects::isNull);
 
-                    if (listData.get(0).getId() == null) {
+                    if (listData.isEmpty()) {
                         Toast.makeText(getActivity(), "No Results Found", Toast.LENGTH_LONG).show();
                     }
 
@@ -138,7 +146,7 @@ public class SearchFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<ResultResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResultResponse> call, @NonNull Throwable t) {
                 // Log the failure message
                 Log.e("ApiService", "Request failed: " + t.getMessage(), t);
 
