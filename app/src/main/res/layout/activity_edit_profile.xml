@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -36,36 +37,36 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/editProfileNameTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name:"
                 android:textSize="20sp" />
 
             <EditText
-                android:id="@+id/editNameIT"
+                android:id="@+id/editProfileNameET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:inputType="text"
-                android:text="Name" />
+                android:hint="New Name"
+                android:inputType="text" />
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="12dp" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/editProfileEmailTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Email:"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/profileEmailTV"
+            <EditText
+                android:id="@+id/editProfileEmailET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:hint="New Email"
                 android:textSize="20sp" />
 
             <Space
@@ -73,20 +74,68 @@
                 android:layout_height="12dp" />
 
             <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/editProfilePasswordTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Joined:"
+                android:text="Password"
                 android:textSize="20sp" />
 
-            <TextView
-                android:id="@+id/profileJoinedTV"
+            <EditText
+                android:id="@+id/editProfilePasswordET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"
+                android:hint="New Password"
                 android:textSize="20sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/editProfileErrorTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FF0000"
+                android:textStyle="bold" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="12dp" />
+
+            <TextView
+                android:id="@+id/editProfileConfirmTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Confirm your credentials to update your profile."
+                android:textAlignment="center"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/editSaveBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#4FC3F7"
+        android:text="Save Changes"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+    <Button
+        android:id="@+id/editCancelBtn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#F06292"
+        android:text="Cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editSaveBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

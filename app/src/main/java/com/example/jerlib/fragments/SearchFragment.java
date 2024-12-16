@@ -3,6 +3,8 @@ package com.example.jerlib.fragments;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,7 @@ import com.example.jerlib.models.Entry;
 import com.example.jerlib.models.ResultResponse;
 import com.example.jerlib.services.ApiService;
 import com.example.jerlib.utils.CustomAPIDeserializer;
+import com.google.android.material.chip.ChipGroup;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -44,6 +47,8 @@ public class SearchFragment extends Fragment {
     List<Entry> listData = new ArrayList<>();
     EditText searchScopusET;
     ImageButton searchScopusBtn, searchScopusConfigBtn;
+    SharedPreferences sharedPref;
+    String sortBy, searchIn, yearStart, yearEnd;
 
     Gson gson = new GsonBuilder()
             .registerTypeAdapter(Entry.class, new CustomAPIDeserializer())
@@ -67,6 +72,8 @@ public class SearchFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+        sharedPref = requireContext().getSharedPreferences("FILTERS", Context.MODE_PRIVATE);
+        SearchConfigBottomSheet dialog = new SearchConfigBottomSheet();
 
         // Initialize views
         searchScopusET = view.findViewById(R.id.searchScopusET);
@@ -76,7 +83,6 @@ public class SearchFragment extends Fragment {
             // Get the query from the EditText
             String query = searchScopusET.getText().toString().trim();
 
-            // Use the query from EditText or default to AF-ID(60103610) if empty
             if (!query.isEmpty()) {
                 fetchScopusData(query);
             } else {
@@ -85,7 +91,6 @@ public class SearchFragment extends Fragment {
         });
 
         searchScopusConfigBtn.setOnClickListener(v -> {
-            SearchConfigBottomSheet dialog = new SearchConfigBottomSheet();
             dialog.show(getChildFragmentManager(), "SearchConfig Bottom Dialog");
         });
 
@@ -106,16 +111,48 @@ public class SearchFragment extends Fragment {
         searchScopusRV.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Perform the initial request with the default query
-        fetchScopusData("title:technology");
+        fetchScopusData("technology");
 
         return view;
     }
 
     private void fetchScopusData(String query) {
         Log.i("ApiService", "Sending API request...");
+        sortBy = sharedPref.getString("sortBy", "Most Recent");
+        searchIn = sharedPref.getString("searchIn", "Title");
+        yearStart = sharedPref.getString("yearStart", "2020");
+        yearEnd = sharedPref.getString("yearEnd", "2024");
+
+        String prefix = "title";
+        switch(searchIn) {
+            case "Author":
+                prefix = "bibjson.author.name";
+                break;
+            case "Keywords":
+                prefix = "bibjson.keywords";
+                break;
+            case "Abstract":
+                prefix = "bibjson.abstract";
+                break;
+            case "Category":
+                prefix = "bibjson.subject.term";
+                break;
+        }
+
+        String sort = "created_date:desc";
+        switch(sortBy) {
+            case "A-Z":
+                sort = "title:asc";
+                break;
+            case "Z-A":
+                sort = "title:desc";
+                break;
+            case "Least Recent":
+                sort = "created_date:asc";
+        }
 
         // Perform the request
-        Call<ResultResponse> call = apiService.getResponse(query, "created_date:desc", 1);
+        Call<ResultResponse> call = apiService.getResponse(prefix + ":" + query + " AND " + "bibjson.year:[" + yearStart + " TO " + yearEnd + "]", sort, 1);
 
         call.enqueue(new Callback<>() {
             @SuppressLint("NotifyDataSetChanged")

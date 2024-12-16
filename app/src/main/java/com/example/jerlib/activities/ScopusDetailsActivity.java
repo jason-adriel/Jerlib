@@ -62,5 +62,9 @@ public class ScopusDetailsActivity extends AppCompatActivity {
             v.getContext().startActivity(browserIntent);
         });
 
+        scopusDetailsAddBtn.setOnClickListener(v -> {
+
+        });
+
     }
 }

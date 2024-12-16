@@ -1,8 +1,12 @@
 package com.example.jerlib.fragments;
 
+import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
+
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -18,6 +22,10 @@ import android.widget.Toast;
 import com.example.jerlib.R;
 import com.example.jerlib.activities.HomeActivity;
 import com.example.jerlib.utils.FirebaseUtil;
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,8 +41,77 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class RegisterFragment extends Fragment {
+
+    // See: https://developer.android.com/training/basics/intents/result
+    private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
+            new FirebaseAuthUIActivityResultContract(),
+            new ActivityResultCallback<FirebaseAuthUIAuthenticationResult>() {
+                @Override
+                public void onActivityResult(FirebaseAuthUIAuthenticationResult result) {
+                   FirebaseUser user = FirebaseUtil.auth.getCurrentUser();
+                    assert user != null;
+                    String uuid = user.getUid();
+                    String name = user.getDisplayName();
+                    String email = user.getEmail();
+
+                    Map<String, Object> userData = new HashMap<>();
+                    userData.put("name", name);
+                    userData.put("email", email);
+                    userData.put("uuid", uuid);
+
+                    Map<String, Object> shelfData = new HashMap<>();
+                    shelfData.put("name", "Default Shelf");
+                    shelfData.put("created_at", new Timestamp(new Date()));
+                    shelfData.put("updated_at", new Timestamp(new Date()));
+                    shelfData.put("entries", List.of());
+
+                    FirebaseUtil.db().collection("Shelves")
+                            .add(shelfData)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d("FIRESTORE", "Document update success.");
+                                    String key = documentReference.getId();
+                                    Map<String, Object> userData = new HashMap<>();
+                                    userData.put("name", name);
+                                    userData.put("email", email);
+                                    userData.put("uuid", uuid);
+                                    userData.put("shelves", List.of(key));
+
+                                    FirebaseUtil.db().collection("Users")
+                                            .document(uuid)
+                                            .set(userData)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Log.d("FIRESTORE", "User data written successfully.");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.e("FIRESTORE", "Failed to write user data.", e);
+                                                }
+                                            });
+
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d("FIRESTORE", "Document update failed.");
+                                }
+                            });
+
+                    Intent startApp = new Intent(getContext(), HomeActivity.class);
+                    requireContext().startActivity(startApp);
+                    requireActivity().finish();
+                }
+            }
+    );
 
     public RegisterFragment() {
         // Required empty public constructor
@@ -50,6 +127,20 @@ public class RegisterFragment extends Fragment {
         EditText passwordET = view.findViewById(R.id.registerPasswordET);
         TextView error = view.findViewById(R.id.registerErrorTV);
         Button registerBtn = view.findViewById(R.id.registerRegisterBtn);
+        SignInButton googleBtn = view.findViewById(R.id.registerGoogleBtn);
+
+        // Choose authentication providers
+        List<AuthUI.IdpConfig> providers = List.of(
+                new AuthUI.IdpConfig.GoogleBuilder().build());
+
+        // Create and launch sign-in intent
+        googleBtn.setOnClickListener(v -> {
+            Intent signInIntent = AuthUI.getInstance()
+                    .createSignInIntentBuilder()
+                    .setAvailableProviders(providers)
+                    .build();
+            signInLauncher.launch(signInIntent);
+        });
 
         registerBtn.setOnClickListener(v -> {
             String name = nameET.getText().toString();
@@ -82,26 +173,6 @@ public class RegisterFragment extends Fragment {
                                     shelfData.put("updated_at", new Timestamp(new Date()));
                                     shelfData.put("entries", List.of());
 
-                                    FirebaseUtil.db().collection("Users")
-                                        .document(uuid)
-                                        .update(userData)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                Log.d("FIRESTORE", "User data written successfully.");
-                                                Intent startApp = new Intent(view.getContext(), HomeActivity.class);
-                                                view.getContext().startActivity(startApp);
-                                                requireActivity().finish();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.e("FIRESTORE", "Failed to write user data.", e);
-                                                error.setText("An error occurred. Please try again.");
-                                            }
-                                        });
-
                                     FirebaseUtil.db().collection("Shelves")
                                             .add(shelfData)
                                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -116,17 +187,19 @@ public class RegisterFragment extends Fragment {
                                                     userData.put("shelves", List.of(key));
 
                                                     FirebaseUtil.db().collection("Users")
-                                                            .add(userData)
-                                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                            .document(uuid)
+                                                            .set(userData)
+                                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
-                                                                public void onSuccess(DocumentReference documentReference) {
-                                                                    Log.d("FIRESTORE", "Userdata written.");
+                                                                public void onSuccess(Void aVoid) {
+                                                                    Log.d("FIRESTORE", "User data written successfully.");
                                                                 }
                                                             })
                                                             .addOnFailureListener(new OnFailureListener() {
                                                                 @Override
                                                                 public void onFailure(@NonNull Exception e) {
-                                                                    Log.d("FIRESTORE", "Userdata write failed!");
+                                                                    Log.e("FIRESTORE", "Failed to write user data.", e);
+                                                                    error.setText("An error occurred. Please try again.");
                                                                 }
                                                             });
 

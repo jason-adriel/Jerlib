@@ -45,7 +45,7 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         profileNameTV = view.findViewById(R.id.profileNameTV);
-        profileEmailTV = view.findViewById(R.id.profileEmailTV);
+        profileEmailTV = view.findViewById(R.id.editProfileEmailET);
         profileJoinedTV = view.findViewById(R.id.profileJoinedTV);
         profileEditBtn = view.findViewById(R.id.profileEditBtn);
         profileLogoutBtn = view.findViewById(R.id.profileLogoutBtn);
@@ -95,6 +95,7 @@ public class ProfileFragment extends Fragment {
                         profileNameTV.setText(name != null ? name : "Name not available");
                         profileJoinedTV.setText(joinedDate);
                     }
+
                 } else {
                     Log.d(TAG, "No user found with the email: " + email);
                 }
