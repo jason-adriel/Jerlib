@@ -48,8 +48,6 @@ public class ScopusDetailsActivity extends AppCompatActivity {
         String paperDescription = getIntent().getStringExtra("description");
         String paperKeywords = getIntent().getStringExtra("keywords");
 
-        Log.d("test", paperDescription);
-
         scopusDetailsTypeTV.setText(paperType);
         scopusDetailsTitleTV.setText(paperTitle);
         scopusDetailsAuthorTV.setText(paperAuthor);
