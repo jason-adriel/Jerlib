@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "684413291574-hqgor5fs48335irsiejk0e1ejafocjee.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jerlib",
+            "certificate_hash": "9e61268585cf4ac5ea6d9703de5122451d53f118"
+          }
+        },
+        {
           "client_id": "684413291574-ohue10k8eiuuias8eqtu53215srjvn9f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

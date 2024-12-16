@@ -22,144 +22,105 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- ChipGroup for Sort By -->
+        <com.google.android.material.chip.ChipGroup
             android:id="@+id/searchSortContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/button"
-            app:layout_constraintTop_toTopOf="@+id/button">
+            app:singleSelection="true">
 
-            <Button
-                android:id="@+id/button"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/sortAlphabetic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#EDE7F6"
+                android:checkable="true"
                 android:text="A-Z"
-                android:textColor="#000000"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="95dp" />
+                android:textColor="@android:color/black" />
 
-            <Button
-                android:id="@+id/button5"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/sortReverseAlphabetic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:backgroundTint="#EDE7F6"
+                android:checkable="true"
                 android:text="Z-A"
-                android:textColor="#000000"
-                app:layout_constraintStart_toEndOf="@+id/button"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:textColor="@android:color/black" />
 
-            <Button
-                android:id="@+id/button6"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/sortRecent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:backgroundTint="#EDE7F6"
-                android:text="Most Relevant"
-                android:textColor="#000000"
-                app:layout_constraintStart_toEndOf="@+id/button5"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/button7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#EDE7F6"
+                android:checkable="true"
                 android:text="Most Recent"
-                android:textColor="#000000"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button" />
+                android:textColor="@android:color/black" />
 
-            <Button
-                android:id="@+id/button9"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/sortLeastRecent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#EDE7F6"
+                android:checkable="true"
                 android:text="Least Recent"
-                android:textColor="#000000"
-                app:layout_constraintStart_toEndOf="@+id/button7"
-                app:layout_constraintTop_toBottomOf="@+id/button5" />
+                android:textColor="@android:color/black" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="Document Type:"
+            android:text="Search In:"
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- ChipGroup for Document Type -->
+        <com.google.android.material.chip.ChipGroup
             android:id="@+id/searchTypeContainer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            >
 
-            <Button
-                android:id="@+id/button10"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/searchTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:backgroundTint="#EDE7F6"
-                android:text="Article"
-                android:textColor="#000000"
+                android:text="Title"
+                android:checkable="true"
+                android:textColor="@android:color/black" />
 
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/button11"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:backgroundTint="#EDE7F6"
-                android:text="Book"
-                android:textColor="#000000"
-                app:layout_constraintStart_toEndOf="@+id/button10"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/button12"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:backgroundTint="#EDE7F6"
-                android:text="Conference"
-                android:textColor="#000000"
-                app:layout_constraintStart_toEndOf="@+id/button11"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/button14"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/searchAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#EDE7F6"
-                android:text="Open Access"
-                android:textColor="#000000"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button10" />
+                android:text="Author"
+                android:checkable="true"
+                android:textColor="@android:color/black" />
 
-            <Button
-                android:id="@+id/button16"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/searchKeywords"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:backgroundTint="#EDE7F6"
-                android:text="Review"
-                android:textColor="#000000"
-                app:layout_constraintStart_toEndOf="@+id/button14"
-                app:layout_constraintTop_toBottomOf="@+id/button11" />
+                android:text="Keywords"
+                android:checkable="true"
+                android:textColor="@android:color/black" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/searchAbstract"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Abstract"
+                android:checkable="true"
+                android:textColor="@android:color/black" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/searchCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:checkable="true"
+                android:textColor="@android:color/black" />
+
+        </com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:id="@+id/textView3"
@@ -186,12 +147,13 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editTextText"
+                android:id="@+id/startYearRange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="number" />
+                android:inputType="number"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -203,7 +165,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/editTextText2"
+                android:id="@+id/endYearRange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -213,7 +175,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button15"
+            android:id="@+id/applyFilterBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

@@ -20,8 +20,9 @@
             android:layout_marginTop="24dp"
             android:text="Paper Type"
             android:textColor="#3F51B5"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/scopusDetailsTitleTV"
@@ -39,23 +40,29 @@
         <TextView
             android:id="@+id/scopusDetailsAuthorTV"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:elegantTextHeight="false"
             android:text="Authors"
             android:textColor="#3F51B5"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsTitleTV"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintBottom_toTopOf="@+id/scopusDetailsPublisherTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsTitleTV" />
 
         <TextView
             android:id="@+id/scopusDetailsPublisherTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="Publisher Title"
             android:textStyle="italic"
-            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsAuthorTV"
-            tools:layout_editor_absoluteX="48dp" />
+            app:layout_constraintBottom_toTopOf="@+id/scopusDetailsKeywordsTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsAuthorTV" />
 
         <TextView
             android:id="@+id/scopusDetailsKeywordsTV"
@@ -64,8 +71,10 @@
             android:layout_marginTop="8dp"
             android:text="Keywords"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsPublisherTV"
-            tools:layout_editor_absoluteX="32dp" />
+            app:layout_constraintBottom_toTopOf="@+id/scopusDetailsDescriptionTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsPublisherTV" />
 
         <TextView
             android:id="@+id/scopusDetailsDescriptionTV"
@@ -75,8 +84,9 @@
             android:fontFamily="sans-serif"
             android:justificationMode="inter_word"
             android:text="Paper Description"
-            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsKeywordsTV"
-            tools:layout_editor_absoluteX="64dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsKeywordsTV" />
 
         <Button
             android:id="@+id/scopusDetailsViewBtn"
