@@ -1,7 +1,9 @@
 package com.example.jerlib.activities;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,8 +16,18 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.jerlib.R;
 import com.example.jerlib.fragments.HomeFragment;
+import com.example.jerlib.fragments.ProfileFragment;
+import com.example.jerlib.fragments.SearchFragment;
 
 public class HomeActivity extends AppCompatActivity {
+
+    ImageView homeHomeIcon, homeSearchIcon, homeProfileIcon;
+    final Fragment homeFragment = new HomeFragment();
+    final Fragment searchFragment = new SearchFragment();
+    final Fragment profileFragment = new ProfileFragment();
+    final FragmentManager manager = getSupportFragmentManager();
+    Fragment active;
+    ImageView activeIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +40,49 @@ public class HomeActivity extends AppCompatActivity {
             return insets;
         });
 
-        loadFragment(new HomeFragment());
+        //Initial config
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.homeFragmentContainer, homeFragment);
+        transaction.add(R.id.homeFragmentContainer, searchFragment).hide(searchFragment);
+        transaction.add(R.id.homeFragmentContainer, profileFragment).hide(profileFragment);
+        transaction.commit();
+        active = homeFragment;
+
+        homeHomeIcon = findViewById(R.id.homeHomeIcon);
+        homeSearchIcon = findViewById(R.id.homeSearchIcon);
+        homeProfileIcon = findViewById(R.id.homeUserIcon);
+        activeIcon = homeHomeIcon;
+        homeHomeIcon.setImageTintList(ColorStateList.valueOf(getColor(R.color.blue)));
+
+        homeHomeIcon.setOnClickListener(v -> {
+            loadFragment(homeFragment);
+            homeHomeIcon.setImageTintList(ColorStateList.valueOf(getColor(R.color.blue)));
+            activeIcon = homeHomeIcon;
+        });
+
+        homeSearchIcon.setOnClickListener(v -> {
+            loadFragment(searchFragment);
+            homeSearchIcon.setImageTintList(ColorStateList.valueOf(getColor(R.color.blue)));
+            activeIcon = homeSearchIcon;
+        });
+
+        homeProfileIcon.setOnClickListener(v -> {
+            loadFragment(profileFragment);
+            homeProfileIcon.setImageTintList(ColorStateList.valueOf(getColor(R.color.blue)));
+            activeIcon = homeProfileIcon;
+        });
     }
 
     private void loadFragment(Fragment fg){
-        FragmentManager manager = getSupportFragmentManager();
+        if (active == fg) {
+            return;
+        }
+
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.homeFragmentContainer, fg);
+        transaction.show(fg);
+        transaction.hide(active);
+        active = fg;
+        activeIcon.setImageTintList(ColorStateList.valueOf(getColor(R.color.black)));
         transaction.commit();
     }
 }
