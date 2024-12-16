@@ -69,11 +69,39 @@ public class RegisterFragment extends Fragment {
                                     Log.d("FIREBASE", "createUserWithEmail:success");
                                     FirebaseUser user = FirebaseUtil.auth.getCurrentUser();
                                     String uuid = user.getUid();
+
+                                    Map<String, Object> userData = new HashMap<>();
+                                    userData.put("name", name);
+                                    userData.put("email", email);
+                                    userData.put("uuid", uuid);
+                                    userData.put("created_at", new Timestamp(new Date()));
+                                    userData.put("updated_at", new Timestamp(new Date()));
+
                                     Map<String, Object> shelfData = new HashMap<>();
                                     shelfData.put("name", "Default Shelf");
                                     shelfData.put("created_at", new Timestamp(new Date()));
                                     shelfData.put("updated_at", new Timestamp(new Date()));
                                     shelfData.put("entries", List.of());
+
+                                    FirebaseUtil.db().collection("Users")
+                                        .document(uuid)
+                                        .update(userData)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d("FIRESTORE", "User data written successfully.");
+                                                Intent startApp = new Intent(view.getContext(), HomeActivity.class);
+                                                view.getContext().startActivity(startApp);
+                                                requireActivity().finish();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.e("FIRESTORE", "Failed to write user data.", e);
+                                                error.setText("An error occurred. Please try again.");
+                                            }
+                                        });
 
                                     FirebaseUtil.db().collection("Shelves")
                                             .add(shelfData)

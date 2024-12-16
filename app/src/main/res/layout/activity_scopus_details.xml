@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/scopusDetailsContainerLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,63 +17,89 @@
             android:id="@+id/scopusDetailsTypeTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="Paper Type"
-            android:textColor="#3F51B5" />
+            android:textColor="#3F51B5"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="32dp" />
 
         <TextView
             android:id="@+id/scopusDetailsTitleTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:fontFamily="serif"
             android:text="Paper Title"
             android:textAlignment="textStart"
             android:textSize="24sp"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold|italic"
+            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsTypeTV"
+            tools:layout_editor_absoluteX="32dp" />
 
         <TextView
             android:id="@+id/scopusDetailsAuthorTV"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:elegantTextHeight="false"
             android:text="Authors"
             android:textColor="#3F51B5"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsTitleTV"
+            tools:layout_editor_absoluteX="32dp" />
 
         <TextView
             android:id="@+id/scopusDetailsPublisherTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Publisher Title"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsAuthorTV"
+            tools:layout_editor_absoluteX="48dp" />
 
         <TextView
             android:id="@+id/scopusDetailsKeywordsTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Keywords"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsPublisherTV"
+            tools:layout_editor_absoluteX="32dp" />
 
         <TextView
             android:id="@+id/scopusDetailsDescriptionTV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:fontFamily="sans-serif"
             android:justificationMode="inter_word"
-            android:text="Paper Description" />
+            android:text="Paper Description"
+            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsKeywordsTV"
+            tools:layout_editor_absoluteX="64dp" />
 
         <Button
             android:id="@+id/scopusDetailsViewBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
             android:backgroundTint="#64B5F6"
-            android:text="View Fulltext Article" />
+            android:text="View Fulltext Article"
+            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsDescriptionTV"
+            tools:layout_editor_absoluteX="32dp" />
 
         <Button
             android:id="@+id/scopusDetailsAddBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"
             android:backgroundTint="#64B5F6"
-            android:text="Add to Shelf" />
+            android:text="Add to Shelf"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scopusDetailsViewBtn"
+            tools:layout_editor_absoluteX="32dp" />
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>
