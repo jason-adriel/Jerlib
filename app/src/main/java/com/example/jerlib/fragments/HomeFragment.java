@@ -29,11 +29,15 @@ import com.example.jerlib.models.Bibjson;
 import com.example.jerlib.models.Entry;
 import com.example.jerlib.models.ResultResponse;
 import com.example.jerlib.services.ApiService;
+import com.example.jerlib.utils.CustomAPIDeserializer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Random;
 
 import retrofit2.Call;
@@ -43,9 +47,15 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
+
+    Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Entry.class, new CustomAPIDeserializer())
+            .excludeFieldsWithoutExposeAnnotation()
+            .create();
+
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://doaj.org/")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 
     ApiService apiService = retrofit.create(ApiService.class);
@@ -115,8 +125,8 @@ public class HomeFragment extends Fragment {
         String paperYear = metadata.getYear();
         String paperJournal = metadata.getJournal().getTitle();
         String paperDOI = metadata.getLink().get(0).getUrl();
-        String paperDescription = getCleanText(metadata.getAbstract() == null ? "-" : metadata.getAbstract());
-        String paperKeywords = metadata.getKeywords() == null ? "None specified" : metadata.getKeywords().get(0).toUpperCase(Locale.ROOT);
+        String paperDescription = getCleanText(metadata.getAbstract());
+        String paperKeywords = metadata.getKeywords().get(0).toUpperCase(Locale.ROOT);
 
         TextView paperCategoryTV = scopusView.findViewById(R.id.paperCategoryTV);
         TextView paperTitleTV = scopusView.findViewById(R.id.paperTitleTV);
@@ -181,9 +191,11 @@ public class HomeFragment extends Fragment {
                 Log.i("ApiService", "Response received: " + response.toString());
                 if (response.isSuccessful()) {
                     ResultResponse resultResponse = response.body();
+                    assert resultResponse != null;
                     listData = resultResponse.getEntries();
+                    listData.removeIf(Objects::isNull);
 
-                    if (listData.get(0).getId() == null) {
+                    if (listData.isEmpty()) {
                         Toast.makeText(getActivity(), "No Results Found", Toast.LENGTH_LONG).show();
                     }
                     else{

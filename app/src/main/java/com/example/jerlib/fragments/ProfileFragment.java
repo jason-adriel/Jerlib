@@ -14,23 +14,22 @@ import android.widget.TextView;
 
 import com.example.jerlib.R;
 import com.example.jerlib.activities.EditProfileActivity;
+import com.example.jerlib.activities.LauncherActivity;
 import com.example.jerlib.utils.FirebaseUtil;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
+import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
     String TAG = "ProfileFragment";
     TextView profileNameTV, profileEmailTV, profileJoinedTV;
     FirebaseUser currentUser;
     FirebaseFirestore db;
-
-    Button profileEditBtn;
+    Button profileEditBtn, profileLogoutBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,6 +48,7 @@ public class ProfileFragment extends Fragment {
         profileEmailTV = view.findViewById(R.id.profileEmailTV);
         profileJoinedTV = view.findViewById(R.id.profileJoinedTV);
         profileEditBtn = view.findViewById(R.id.profileEditBtn);
+        profileLogoutBtn = view.findViewById(R.id.profileLogoutBtn);
 
         if (currentUser != null) {
             String email = currentUser.getEmail();
@@ -66,6 +66,13 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
         });
 
+        profileLogoutBtn.setOnClickListener(v -> {
+            FirebaseUtil.auth.signOut();
+            Intent logout = new Intent(v.getContext(), LauncherActivity.class);
+            requireContext().startActivity(logout);
+            requireActivity().finish();
+        });
+
         return view;
     }
 
@@ -77,15 +84,16 @@ public class ProfileFragment extends Fragment {
                 if (!querySnapshot.isEmpty()) {
                     for (QueryDocumentSnapshot document : querySnapshot) {
                         String name = document.getString("name");
+                        Long time = Objects.requireNonNull(Objects.requireNonNull(FirebaseUtil.auth.getCurrentUser()).getMetadata()).getCreationTimestamp();
                         String joinedDate = new SimpleDateFormat("dd MMMM yyyy", Locale.getDefault())
-                                .format(document.getDate("created_at"));
+                                .format(time);
 
                         Log.d(TAG, "Name: " + (name != null ? name : "Name not available"));
-                        Log.d(TAG, "Joined Date: " + (joinedDate != null ? joinedDate : "Joined date not available"));
+                        Log.d(TAG, "Joined Date: " + joinedDate);
 
                         // Update UI
                         profileNameTV.setText(name != null ? name : "Name not available");
-                        profileJoinedTV.setText(joinedDate != null ? joinedDate : "Joined date not available");
+                        profileJoinedTV.setText(joinedDate);
                     }
                 } else {
                     Log.d(TAG, "No user found with the email: " + email);
