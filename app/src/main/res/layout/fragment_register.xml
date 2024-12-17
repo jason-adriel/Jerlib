@@ -43,11 +43,20 @@
         android:inputType="textPassword"
         android:textSize="20sp" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="18dp" />
+
     <Button
         android:id="@+id/registerRegisterBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#4FC3F7"
         android:text="Register" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="18dp" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/registerGoogleBtn"
