@@ -88,94 +88,94 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="4dp"
-            android:layout_weight="0"
-            android:text="Article Preferences"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:id="@+id/textView12"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="16dp"-->
+<!--            android:layout_marginBottom="4dp"-->
+<!--            android:layout_weight="0"-->
+<!--            android:text="Article Preferences"-->
+<!--            android:textSize="24sp"-->
+<!--            android:textStyle="bold" />-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipGroup"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:chipSpacingVertical="0dp"
-                app:layout_constraintStart_toStartOf="parent">
+<!--            <com.google.android.material.chip.ChipGroup-->
+<!--                android:id="@+id/chipGroup"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                app:chipSpacingVertical="0dp"-->
+<!--                app:layout_constraintStart_toStartOf="parent">-->
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checkable="true"
-                    android:checked="true"
-                    android:enabled="false"
-                    android:text="Emerging Technologies" />
+<!--                <com.google.android.material.chip.Chip-->
+<!--                    android:id="@+id/chip"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:checkable="true"-->
+<!--                    android:checked="true"-->
+<!--                    android:enabled="false"-->
+<!--                    android:text="Emerging Technologies" />-->
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checkable="true"
-                    android:checked="true"
-                    android:text="Data and Analytics" />
+<!--                <com.google.android.material.chip.Chip-->
+<!--                    android:id="@+id/chip2"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:checkable="true"-->
+<!--                    android:checked="true"-->
+<!--                    android:text="Data and Analytics" />-->
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cybersecurity"
-                    app:closeIconVisible="false" />
+<!--                <com.google.android.material.chip.Chip-->
+<!--                    android:id="@+id/chip3"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Cybersecurity"-->
+<!--                    app:closeIconVisible="false" />-->
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Blockchain Systems" />
+<!--                <com.google.android.material.chip.Chip-->
+<!--                    android:id="@+id/chip4"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Blockchain Systems" />-->
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cloud Infrastructure" />
+<!--                <com.google.android.material.chip.Chip-->
+<!--                    android:id="@+id/chip5"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Cloud Infrastructure" />-->
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sustainable Energy" />
+<!--                <com.google.android.material.chip.Chip-->
+<!--                    android:id="@+id/chip6"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Sustainable Energy" />-->
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Health and Biotechnology" />
+<!--                <com.google.android.material.chip.Chip-->
+<!--                    android:id="@+id/chip7"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Health and Biotechnology" />-->
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Robotics" />
+<!--                <com.google.android.material.chip.Chip-->
+<!--                    android:id="@+id/chip8"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Robotics" />-->
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip9"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Business and Finance" />
+<!--                <com.google.android.material.chip.Chip-->
+<!--                    android:id="@+id/chip9"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Business and Finance" />-->
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Future Technologies" />
-            </com.google.android.material.chip.ChipGroup>
+<!--                <com.google.android.material.chip.Chip-->
+<!--                    android:id="@+id/chip10"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Future Technologies" />-->
+<!--            </com.google.android.material.chip.ChipGroup>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

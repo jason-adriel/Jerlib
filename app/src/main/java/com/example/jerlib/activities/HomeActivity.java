@@ -18,13 +18,15 @@ import com.example.jerlib.R;
 import com.example.jerlib.fragments.HomeFragment;
 import com.example.jerlib.fragments.ProfileFragment;
 import com.example.jerlib.fragments.SearchFragment;
+import com.example.jerlib.fragments.ShelfFragment;
 
 public class HomeActivity extends AppCompatActivity {
 
-    ImageView homeHomeIcon, homeSearchIcon, homeProfileIcon;
+    ImageView homeHomeIcon, homeSearchIcon, homeProfileIcon, homeShelfIcon;
     final Fragment homeFragment = new HomeFragment();
     final Fragment searchFragment = new SearchFragment();
     final Fragment profileFragment = new ProfileFragment();
+    final Fragment shelfFragment = new ShelfFragment();
     final FragmentManager manager = getSupportFragmentManager();
     Fragment active;
     ImageView activeIcon;
@@ -45,12 +47,14 @@ public class HomeActivity extends AppCompatActivity {
         transaction.add(R.id.homeFragmentContainer, homeFragment);
         transaction.add(R.id.homeFragmentContainer, searchFragment).hide(searchFragment);
         transaction.add(R.id.homeFragmentContainer, profileFragment).hide(profileFragment);
+        transaction.add(R.id.homeFragmentContainer, shelfFragment).hide(shelfFragment);
         transaction.commit();
         active = homeFragment;
 
         homeHomeIcon = findViewById(R.id.homeHomeIcon);
         homeSearchIcon = findViewById(R.id.homeSearchIcon);
         homeProfileIcon = findViewById(R.id.homeUserIcon);
+        homeShelfIcon = findViewById(R.id.homeShelvesIcon);
         activeIcon = homeHomeIcon;
         homeHomeIcon.setImageTintList(ColorStateList.valueOf(getColor(R.color.blue)));
 
@@ -70,6 +74,12 @@ public class HomeActivity extends AppCompatActivity {
             loadFragment(profileFragment);
             homeProfileIcon.setImageTintList(ColorStateList.valueOf(getColor(R.color.blue)));
             activeIcon = homeProfileIcon;
+        });
+
+        homeShelfIcon.setOnClickListener(v -> {
+            loadFragment(shelfFragment);
+            homeShelfIcon.setImageTintList(ColorStateList.valueOf(getColor(R.color.blue)));
+            activeIcon = homeShelfIcon;
         });
     }
 
