@@ -47,7 +47,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="16dp" />
+        android:layout_height="8dp" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/loginGoogleBtn"
@@ -55,6 +55,10 @@
         android:layout_height="wrap_content">
 
     </com.google.android.gms.common.SignInButton>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="8dp" />
 
     <TextView
         android:id="@+id/loginErrorTV"
