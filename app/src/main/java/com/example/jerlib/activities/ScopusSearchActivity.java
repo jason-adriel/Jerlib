@@ -55,7 +55,7 @@ public class ScopusSearchActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_scopus_search);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.scopusDetailsAuthorTV), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.activityScopusConstraint), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
