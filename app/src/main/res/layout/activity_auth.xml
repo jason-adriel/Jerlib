@@ -10,18 +10,19 @@
 
     <ImageView
         android:id="@+id/authLogoIV"
-        android:layout_width="170dp"
+        android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="120dp"
         android:layout_marginTop="128dp"
         android:layout_marginEnd="120dp"
         android:layout_marginBottom="16dp"
+        android:background="#000000"
         android:contentDescription="Main Jerlib logo"
         app:layout_constraintBottom_toTopOf="@+id/authFragmentContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/jerlib_logo_transparent" />
+        app:srcCompat="@drawable/logo" />
 
     <FrameLayout
         android:id="@+id/authFragmentContainer"

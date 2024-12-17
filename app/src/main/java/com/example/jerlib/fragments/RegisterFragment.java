@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jerlib.R;
+import com.example.jerlib.activities.AuthActivity;
 import com.example.jerlib.activities.HomeActivity;
 import com.example.jerlib.utils.FirebaseUtil;
 import com.firebase.ui.auth.AuthUI;
@@ -212,7 +213,7 @@ public class RegisterFragment extends Fragment {
                                                 }
                                             });
 
-                                    Intent startApp = new Intent(view.getContext(), HomeActivity.class);
+                                    Intent startApp = new Intent(view.getContext(), AuthActivity.class);
                                     view.getContext().startActivity(startApp);
                                     requireActivity().finish();
                                 } else {
