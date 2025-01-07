@@ -62,6 +62,8 @@ public class ShelfFragment extends Fragment {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
+                                        listData.clear();
+
                                         articles = (List<String>) document.get("entries");
                                         assert articles != null;
                                         for (String s : articles) {
@@ -108,6 +110,12 @@ public class ShelfFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        fetchUserShelf();
     }
 
     @SuppressLint("NotifyDataSetChanged")
