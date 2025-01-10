@@ -2,16 +2,15 @@ package com.example.jerlib.fragments;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.jerlib.R;
 import com.example.jerlib.adapters.ScopusAdapter;
@@ -30,15 +29,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 public class ShelfFragment extends Fragment {
     String shelfID;
     List<String> articles;
     List<Entry> listData = new ArrayList<>();
     RecyclerView shelfItemRV;
-
     private void fetchUserShelf() {
         FirebaseFirestore db = FirebaseUtil.db();
         String uuid = FirebaseUtil.auth.getUid();

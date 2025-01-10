@@ -50,10 +50,17 @@ public class SearchConfigBottomSheet extends BottomSheetDialogFragment {
         endYearET.setText(endYear);
 
         applyFilterBtn.setOnClickListener(v -> {
-            String sortBy = ((Chip)view.findViewById(searchSortContainer.getCheckedChipId())).getText().toString();
-            String searchIn = ((Chip)view.findViewById(searchTypeContainer.getCheckedChipId())).getText().toString();
+            Chip sortChip = ((Chip) view.findViewById(searchSortContainer.getCheckedChipId()));
+            Chip searchChip = ((Chip) view.findViewById(searchTypeContainer.getCheckedChipId()));
+            String sortBy = sortChip != null ? sortChip.getText().toString() : "A-Z";
+            String searchIn = searchChip != null ? searchChip.getText().toString() : "Title";
             String start = startYearET.getText().toString();
             String end = endYearET.getText().toString();
+
+            if (start.isEmpty() || end.isEmpty()) {
+                start = "2020";
+                end = "2024";
+            }
 
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("sortBy", sortBy);
