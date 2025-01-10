@@ -78,7 +78,7 @@ public class ShelfFragment extends Fragment {
                                             fetchScopusData(queryString);
                                         } else if (shelfItemRV.getAdapter() != null) {
                                             shelfItemRV.getAdapter().notifyDataSetChanged();
-                                            shelfNotificationTV.setText("Your recently emptied your shelf! Go search for more now!");
+                                            shelfNotificationTV.setText("You recently emptied your shelf! Go search for more now!");
                                         } else {
                                             shelfNotificationTV.setText("Your shelf is empty, go search for some references!");
                                         }
