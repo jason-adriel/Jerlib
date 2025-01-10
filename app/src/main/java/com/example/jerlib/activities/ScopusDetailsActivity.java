@@ -37,7 +37,7 @@ public class ScopusDetailsActivity extends AppCompatActivity {
     List<String> articles;
     String shelfID;
 
-    private void fetchUserShelf(String paperDOI) {
+    private void fetchUserShelf(String paperID) {
         FirebaseFirestore db = FirebaseUtil.db();
         String uuid = FirebaseUtil.auth.getUid();
         assert uuid != null;
@@ -61,10 +61,10 @@ public class ScopusDetailsActivity extends AppCompatActivity {
                                     if (document.exists()) {
                                         articles = (List<String>) document.get("entries");
                                         for (String article : articles) {
-                                            if (Objects.equals(article, paperDOI)) {
+                                            if (Objects.equals(article, paperID)) {
                                                 scopusDetailsAddBtn.setText("Remove from shelf.");
                                                 scopusDetailsAddBtn.setOnClickListener(v -> {
-                                                    removeItem(paperDOI);
+                                                    removeItem(paperID);
                                                 });
                                                 break;
                                             }
@@ -100,8 +100,6 @@ public class ScopusDetailsActivity extends AppCompatActivity {
             return insets;
         });
 
-
-
         scopusDetailsTypeTV = findViewById(R.id.scopusDetailsTypeTV);
         scopusDetailsTitleTV = findViewById(R.id.scopusDetailsTitleTV);
         scopusDetailsAuthorTV = findViewById(R.id.scopusDetailsAuthorTV);
@@ -118,8 +116,9 @@ public class ScopusDetailsActivity extends AppCompatActivity {
         String paperDOI = getIntent().getStringExtra("doi");
         String paperDescription = getIntent().getStringExtra("description");
         String paperKeywords = getIntent().getStringExtra("keywords");
+        String paperID = getIntent().getStringExtra("id");
 
-        fetchUserShelf(paperDOI);
+        fetchUserShelf(paperID);
 
         scopusDetailsTypeTV.setText(paperType);
         scopusDetailsTitleTV.setText(paperTitle);
@@ -137,20 +136,20 @@ public class ScopusDetailsActivity extends AppCompatActivity {
 
         scopusDetailsAddBtn.setOnClickListener(v -> {
             Log.d("TAG", "Trying to add item");
-            addItem(paperDOI);
+            addItem(paperID);
         });
 
     }
 
-    public void removeItem(String paperDOI) {
+    public void removeItem(String paperID) {
         FirebaseUtil.db().collection("Shelves").document(shelfID)
-                .update("entries", FieldValue.arrayRemove(paperDOI))
+                .update("entries", FieldValue.arrayRemove(paperID))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         scopusDetailsAddBtn.setText("Add to shelf");
                         scopusDetailsAddBtn.setOnClickListener(v -> {
-                            addItem(paperDOI);
+                            addItem(paperID);
                         });
                         Log.d("TAG", "Successfully removed from the entries array.");
                         Toast.makeText(ScopusDetailsActivity.this, "Removed from shelf.", Toast.LENGTH_SHORT).show();
@@ -164,15 +163,15 @@ public class ScopusDetailsActivity extends AppCompatActivity {
                 });
     }
 
-    public void addItem(String paperDOI) {
+    public void addItem(String paperID) {
         FirebaseUtil.db().collection("Shelves").document(shelfID)
-                .update("entries", FieldValue.arrayUnion(paperDOI))
+                .update("entries", FieldValue.arrayUnion(paperID))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         scopusDetailsAddBtn.setText("Remove from shelf.");
                         scopusDetailsAddBtn.setOnClickListener(v -> {
-                            removeItem(paperDOI);
+                            removeItem(paperID);
                         });
                         Log.d("TAG", "Successfully added to the entries array.");
                         Toast.makeText(ScopusDetailsActivity.this, "Added to shelf.", Toast.LENGTH_SHORT).show();
