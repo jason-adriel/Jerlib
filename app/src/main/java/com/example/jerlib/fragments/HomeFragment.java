@@ -2,29 +2,23 @@ package com.example.jerlib.fragments;
 
 import static com.example.jerlib.adapters.ScopusAdapter.getCleanText;
 
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.jerlib.R;
 import com.example.jerlib.activities.ScopusDetailsActivity;
-import com.example.jerlib.activities.ScopusSearchActivity;
-import com.example.jerlib.adapters.ScopusAdapter;
 import com.example.jerlib.models.Bibjson;
 import com.example.jerlib.models.Entry;
 import com.example.jerlib.models.ResultResponse;
@@ -126,6 +120,7 @@ public class HomeFragment extends Fragment {
         String paperJournal = metadata.getJournal().getTitle();
         String paperDOI = metadata.getLink().get(0).getUrl();
         String paperDescription = getCleanText(metadata.getAbstract());
+        String paperID = listData.get(i).getId();
         String paperKeywords = metadata.getKeywords().get(0).toUpperCase(Locale.ROOT);
 
         TextView paperCategoryTV = scopusView.findViewById(R.id.paperCategoryTV);
@@ -147,6 +142,7 @@ public class HomeFragment extends Fragment {
             seeDetails.putExtra("description", paperDescription);
             seeDetails.putExtra("publisher", paperJournal);
             seeDetails.putExtra("author", paperAuthor);
+            seeDetails.putExtra("id", paperID);
 
             v.getContext().startActivity(seeDetails);
         });

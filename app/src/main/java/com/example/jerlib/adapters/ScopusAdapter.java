@@ -3,7 +3,6 @@ package com.example.jerlib.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +54,7 @@ public class ScopusAdapter extends RecyclerView.Adapter<ScopusAdapter.ScopusView
         String paperDOI = metadata.getLink().get(0).getUrl();
         String paperDescription = getCleanText(metadata.getAbstract());
         String paperKeywords = metadata.getKeywords().get(0).toUpperCase(Locale.ROOT);
+        String paperID = scopusList.get(position).getId();
 
         holder.paperCategoryTV.setText(paperCategory);
         holder.paperTitleTV.setText(paperTitle);
@@ -70,6 +70,7 @@ public class ScopusAdapter extends RecyclerView.Adapter<ScopusAdapter.ScopusView
             seeDetails.putExtra("description", paperDescription);
             seeDetails.putExtra("publisher", paperJournal);
             seeDetails.putExtra("author", paperAuthor);
+            seeDetails.putExtra("id", paperID);
 
             v.getContext().startActivity(seeDetails);
         });

@@ -59,12 +59,11 @@ public class ShelfFragment extends Fragment {
                                     DocumentSnapshot document = task.getResult();
                                     if (document.exists()) {
                                         listData.clear();
-
                                         articles = (List<String>) document.get("entries");
                                         assert articles != null;
-                                        for (String s : articles) {
+                                        for (String id : articles) {
                                             Link link = new Link();
-                                            link.setUrl(s);
+                                            link.setUrl("https://google.com");
                                             Author author = new Author();
                                             author.setName("-");
                                             Entry entry = new Entry();
@@ -82,6 +81,7 @@ public class ShelfFragment extends Fragment {
                                             bibjson.setAbstract("-");
                                             bibjson.setSubject(List.of(sb));
                                             entry.setBibjson(bibjson);
+                                            entry.setId(id);
                                             listData.add(entry);
                                         }
                                         ScopusAdapter adapter = new ScopusAdapter(listData);
